@@ -263,4 +263,4 @@ function ProblemFive() {
 /* Problem 2 Result */    //console.log(ProblemTwo());
 /* Problem 3 Result */    //console.log(ProblemThree());
 /* Problem 4 Result */    //console.log(ProblemFour());
-/* Problem 4 Result */    //console.log(util.inspect(ProblemFive(), {depth: null, colors: true}));
+/* Problem 5 Result */    //console.log(util.inspect(ProblemFive(), {depth: null, colors: true}));

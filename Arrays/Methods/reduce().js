@@ -1,3 +1,37 @@
+/* ===================== Array.prototype.reduce() =====================
+
+   What it does:
+   Turns an array into a single value by accumulating
+   results step by step.
+
+   Syntax:
+     array.reduce((accumulator, currentValue, index, array) => newAccumulator, initialValue)
+
+   Arguments:
+     Callback parameters:
+       1. accumulator     → Value carried between iterations.
+       2. currentValue    → Current element being processed.
+       3. index           → Index of the current element.
+       4. array           → The original array.
+
+     reduce() parameter:
+       5. initialValue    → Starting value for the accumulator.
+
+   Behavior:
+     - Runs from left to right.
+     - Return value becomes the next accumulator.
+     - Final accumulator is the result.
+
+   Edge cases:
+     - Missing initialValue → first element becomes accumulator.
+     - Empty array without initialValue → throws error.
+
+   Example:
+     const nums = [1, 2, 3];
+     nums.reduce((sum, n) => sum + n, 0); // 6
+
+===================================================================== */
+
 const util = require('util'); // imported util for visualizing densely nested Arrays or Objects
 
 
@@ -11,16 +45,6 @@ const util = require('util'); // imported util for visualizing densely nested Ar
    in a list of strings. Produces an object mapping characters
    to their frequency.
 
-   Concepts Practiced:
-   - Object accumulation using reduce
-   - Computed property names
-   - Immutable updates
-
-   Rule sets:
-     1. Use reduce
-     2. No loops
-     3. Do not mutate the accumulator
-     4. Return a new object at each step
 ======================================================== */
 
 function ProblemOne() {
@@ -35,8 +59,6 @@ function ProblemOne() {
 }
 
 
-
-
 /* ===================== Problem 2 =====================
                     Group Names by Age
 
@@ -45,18 +67,6 @@ function ProblemOne() {
    object where each key represents an age and each value
    is an array of names belonging to that age group.
 
-   Concepts Practiced:
-   - Grouping data using reduce
-   - Array accumulation within objects
-   - Computed property names
-   - Immutable array updates
-
-   Rule sets:
-     1. Use reduce
-     2. No loops
-     3. Do not mutate the accumulator
-     4. Do not mutate arrays
-     5. Return a new object at each step
 ======================================================== */
 
 function ProblemTwo() {
@@ -79,8 +89,6 @@ function ProblemTwo() {
 }
 
 
-
-
 /* ===================== Problem 3 =====================
                   Category Score Summary
 
@@ -89,20 +97,6 @@ function ProblemTwo() {
    category, the total score and number of entries are
    calculated and stored as an object.
 
-   The final result maps each category to an object
-   containing its cumulative score and count.
-
-   Concepts Practiced:
-   - Nested object accumulation using reduce
-   - Managing multiple values in accumulator state
-   - Safe access with optional chaining
-   - Immutable updates of nested structures
-
-   Rule sets:
-     1. Use reduce
-     2. No loops
-     3. Do not mutate the accumulator
-     4. Return a new object at each step
 ======================================================== */
 
 function ProblemThree() {
@@ -139,8 +133,6 @@ function ProblemThree() {
 }
 
 
-
-
 /* ===================== Problem 4 =====================
                    Word Length Frequency
 
@@ -150,20 +142,6 @@ function ProblemThree() {
    word length and each value represents the frequency
    of words with that length.
 
-   This problem reinforces object accumulation patterns
-   using derived keys.
-
-   Concepts Practiced:
-   - Deriving grouping keys from data
-   - Object accumulation with reduce
-   - Computed property names
-   - Immutable updates
-
-   Rule sets:
-     1. Use reduce
-     2. No loops
-     3. Do not mutate the accumulator
-     4. Return a new object at each step
 ======================================================== */
 
 function ProblemFour() {
@@ -180,8 +158,6 @@ function ProblemFour() {
 }
 
 
-
-
 /* ===================== Problem 5 =====================
              User Session Grouping by Time Gap
 
@@ -195,19 +171,6 @@ function ProblemFour() {
    array of sessions, and each session is represented
    as an array of action–time objects.
 
-   Concepts Practiced:
-   - Stateful accumulation with reduce
-   - Sessionization using gap-based logic
-   - Nested array construction
-   - Managing historical state per group
-   - Immutable updates of complex structures
-
-   Rule sets:
-     1. Use reduce
-     2. No loops
-     3. Do not mutate objects or arrays
-     4. Do not sort the input data
-     5. Group sessions based on time gaps per user
 ======================================================== */
 
 function ProblemFive() {
@@ -254,6 +217,65 @@ function ProblemFive() {
 }
 
 
+/* ===================== Problem 6 =====================
+        User Activity Dashboard (reduce)
+
+   Overview:
+   Processes a list of user activity logs and builds
+   a dashboard-style summary using Array.prototype.reduce().
+
+======================================================== */
+
+function ProblemSix() {
+    const users = [
+        { id: "u1", name: "Joy" },
+        { id: "u2", name: "Alex" },
+        { id: "u3", name: "Sam" }
+    ];
+
+    const activities = [
+        { userId: "u1", type: "login", time: 100 },
+        { userId: "u2", type: "login", time: 120 },
+        { userId: "u1", type: "post", time: 200 },
+        { userId: "u3", type: "login", time: 220 },
+        { userId: "u2", type: "comment", time: 300 },
+        { userId: "u1", type: "comment", time: 350 },
+        { userId: "u3", type: "post", time: 400 },
+        { userId: "u2", type: "logout", time: 500 }
+    ];
+
+    const userActivityOverview = activities.reduce((acc, curr) => {
+        const existingData = acc['users'] || {};
+        const userData = existingData[curr.userId] || {};
+        const activityStats = acc['activityStats'] || {};
+
+        return {
+            ...acc,
+            ['users']: {
+                ...existingData,
+                [curr.userId]: {
+                    ...userData,
+                    ['name']: userData['name'] || users.filter(item => item.id == curr.userId)[0].name,
+                    ['count']: (userData['count'] || 0) + 1,
+                    ['last']: curr.type,
+                    ['lastTime']: curr.time
+                }
+            },
+            ['activityStats']: {
+                ...activityStats,
+                ['login']: (activityStats['login'] || 0) + (curr.type == 'login' ? 1 : 0),
+                ['post']: (activityStats['post'] || 0) + (curr.type == 'post' ? 1 : 0),
+                ['comment']: (activityStats['comment'] || 0) + (curr.type == 'comment' ? 1 : 0),
+                ['logout']: (activityStats['logout'] || 0) + (curr.type == 'logout' ? 1 : 0)
+            },
+        }
+    }, {});
+
+    return userActivityOverview;
+
+}
+
+
 
 
 // ===== Execution Area =====
@@ -264,3 +286,4 @@ function ProblemFive() {
 /* Problem 3 Result */    //console.log(ProblemThree());
 /* Problem 4 Result */    //console.log(ProblemFour());
 /* Problem 5 Result */    //console.log(util.inspect(ProblemFive(), {depth: null, colors: true}));
+/* Problem 6 Result */    //console.log(ProblemSix());

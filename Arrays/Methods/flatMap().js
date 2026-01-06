@@ -84,9 +84,34 @@ function ProblemTwo() {
 }
 
 
+/* ===================== Problem 3 =====================
+        Normalize Product Categories Using flatMap()
+
+   Overview:
+   Convert a list of products with category arrays
+   into a single flat array where each category is
+   paired with its product name using Array.prototype.flatMap().
+
+======================================================== */
+
+function ProblemThree() {
+  const products = [
+    { name: "Laptop", categories: ["electronics", "computers"] },
+    { name: "Phone", categories: ["electronics"] },
+    { name: "Desk", categories: ["furniture", "office"] },
+    { name: "Pen", categories: [] }
+  ];
+  
+  const result = products.flatMap(x => x.categories.map(y => ({product: x.name, category: y})));
+  return result;
+
+} 
+
+
 
 
 // ===== Execution Area =====
 // Uncomment the specific console to see output.
 /* Problem 1 Result */    //console.log(ProblemOne());
-/* Problem 1 Result */    //console.log(ProblemTwo());;
+/* Problem 2 Result */    //console.log(ProblemTwo());
+/* Problem 3 Result */    //console.log(ProblemThree());

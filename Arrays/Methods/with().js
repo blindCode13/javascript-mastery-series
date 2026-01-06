@@ -93,6 +93,28 @@ function ProblemThree() {
 }
 
 
+/* ===================== Problem 4 =====================
+            Mask Sensitive Values Using with()
+
+   Overview:
+   Given a list of user profiles, create a new list
+   where sensitive fields are masked for specific users,
+   while all other data remains unchanged.
+
+======================================================== */
+
+function ProblemFour() {
+  const profiles = [
+    { id: "u1", name: "Joy",   email: "joy@mail.com",   role: "admin" },
+    { id: "u2", name: "Alex",  email: "alex@mail.com",  role: "user" },
+    { id: "u3", name: "Sam",   email: "sam@mail.com",   role: "user" }
+  ];
+
+  const updatedProfiles = profiles.with(0, {...profiles[0], email: profiles[0].role !== "admin" && "hidden" || profiles[0].email }).with(1, {...profiles[1], email: profiles[1].role !== "admin" && "hidden" || profiles[1].email }).with(2, {...profiles[2], email: profiles[2].role !== "admin" && "hidden" || profiles[2].email });
+  return updatedProfiles;
+}
+
+
 
 
 // ===== Execution Area =====
@@ -100,3 +122,4 @@ function ProblemThree() {
 /* Problem 1 Result */    //console.log(ProblemOne());
 /* Problem 2 Result */    //console.log(ProblemTwo());
 /* Problem 3 Result */    //console.log(ProblemThree());
+/* Problem 4 Result */    //console.log(ProblemFour());

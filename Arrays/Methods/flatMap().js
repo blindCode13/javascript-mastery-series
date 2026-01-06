@@ -105,7 +105,54 @@ function ProblemThree() {
   const result = products.flatMap(x => x.categories.map(y => ({product: x.name, category: y})));
   return result;
 
-} 
+}
+
+
+/* ===================== Problem 4 =====================
+        Expand Order Items by Quantity Using flatMap()
+
+   Overview:
+   Convert a list of orders into a single flat array
+   where each item is duplicated based on its quantity
+   and paired with its corresponding orderId using
+   Array.prototype.flatMap().
+
+======================================================== */
+
+function ProblemFour() {
+  const orders = [
+    {
+      orderId: "o1",
+      items: [
+        { name: "Pen", quantity: 2 },
+        { name: "Notebook", quantity: 1 }
+      ]
+    },
+    {
+      orderId: "o2",
+      items: []
+    },
+    {
+      orderId: "o3",
+      items: [
+        { name: "Pencil", quantity: 3 }
+      ]
+    }
+  ];
+
+  const result = orders.flatMap(x => x.items.flatMap(y => {
+    let res = [];
+    for (let i = 0; i < y.quantity; i++) {
+      res.push({
+        orderId: x.orderId,
+        item: y.name
+      })
+    }
+    return res;
+  }))
+  return result;
+
+}
 
 
 
@@ -115,3 +162,4 @@ function ProblemThree() {
 /* Problem 1 Result */    //console.log(ProblemOne());
 /* Problem 2 Result */    //console.log(ProblemTwo());
 /* Problem 3 Result */    //console.log(ProblemThree());
+/* Problem 3 Result */    //console.log(ProblemFour());

@@ -60,8 +60,33 @@ function ProblemOne() {
 }
 
 
+/* ===================== Problem 2 =====================
+        Normalize Scores Using flatMap()
+
+   Overview:
+   Convert a list of objects containing score arrays
+   into a single flat array where each score is paired
+   with its corresponding id using Array.prototype.flatMap().
+
+======================================================== */
+
+
+function ProblemTwo() {
+  const data = [
+    { id: 1, scores: [10, 20, 30] },
+    { id: 2, scores: [] },
+    { id: 3, scores: [15, 25] },
+    { id: 4, scores: [5] }
+  ];
+  const result = data.flatMap(x => x.scores.flatMap(y => [{id: x.id, score: y}]));
+  return result;
+
+}
+
+
 
 
 // ===== Execution Area =====
 // Uncomment the specific console to see output.
 /* Problem 1 Result */    //console.log(ProblemOne());
+/* Problem 1 Result */    //console.log(ProblemTwo());;
